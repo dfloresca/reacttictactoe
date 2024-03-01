@@ -6,19 +6,29 @@ function Square({value, onSquareClick}) {
 
 // renders the game board
 export default function Board() {
+  // setting "X" as first
+  const [xIsNext, setXIsNext] = useState(true);
   const [squares, setSquares] = useState(Array(9).fill(null))
 
   function handleClick(i) {
+    if (squares[i]){
+      return;
+    }
     const nextSquares = squares.slice();
-    nextSquares[i] = "X" // X goes first
-    setSquares(nextSquares);
+    if (xIsNext) {
+      nextSquares[i] = "X"; 
+  } else {
+    nextSquares[i] = "O";
   }
+  setSquares(nextSquares);
+  setXIsNext(!xIsNext);
+}
   return (
     <>
       <div className="board-row">
         <Square value= {squares[0]} onSquareClick={() => handleClick(0)} />
         <Square value= {squares[1]} onSquareClick={() => handleClick(1)} />
-        <Square value= {squares[2]}onSquareClick={() => handleClick(2)} />
+        <Square value= {squares[2]} onSquareClick={() => handleClick(2)} />
       </div>
       <div className="board-row">
         <Square value= {squares[3]} onSquareClick={() => handleClick(3)} />
